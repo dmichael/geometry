@@ -1,5 +1,5 @@
 require 'core_extensions'
-require 'polygon_classify'
+require 'polygon_classifier'
 
 class Shape
   attr_accessor :type, :points, :angles
@@ -10,13 +10,8 @@ class Shape
   end
   
   def convex?
-    polygon_classify = PolygonClassify.new
-    polygon_classify.classify(@points)
-    #calculate_angles
-    
-    # @angles.each do |angle|
-    #       puts angle
-    #     end
+    polygon_classifier = PolygonClassifier.new(@points)
+    (polygon_classifier.convexity != 'NotConvex') ? true : false
   end
   
   def calculate_angles

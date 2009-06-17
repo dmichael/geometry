@@ -95,13 +95,15 @@ FILE			    *f;
 		
     curDir = Compare(first, second);
     while( GetDifferentPoint(f, second, &third) ) {
-	CheckTriple;
+	    CheckTriple;
     }
     /* Must check that end of list continues back to start properly */
     if ( Compare(second, saveFirst) ) {
-	third = saveFirst; CheckTriple;
+	    third = saveFirst; 
+	    CheckTriple;
     }
-    third = saveSecond;	 CheckTriple;
+    third = saveSecond;	 
+    CheckTriple;
 
     if ( dirChanges > 2 ) return angleSign ? NotConvex : NotConvexDegenerate;
     if ( angleSign  > 0 ) return ConvexCCW;
