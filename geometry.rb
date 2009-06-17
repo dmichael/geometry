@@ -28,9 +28,9 @@ geometry = Geometry.new(File.read('test/geometry.xml'))
 
 
 geometry.shapes.each do |shape|
-  shape.convex?
+  puts shape.convex?
 
-  puts shape.angles.inspect
+  #puts shape.angles.inspect
   puts ''
 end
 

@@ -1,4 +1,5 @@
 require 'core_extensions'
+require 'polygon_classify'
 
 class Shape
   attr_accessor :type, :points, :angles
@@ -9,7 +10,13 @@ class Shape
   end
   
   def convex?
-    calculate_angles
+    polygon_classify = PolygonClassify.new
+    polygon_classify.classify(@points)
+    #calculate_angles
+    
+    # @angles.each do |angle|
+    #       puts angle
+    #     end
   end
   
   def calculate_angles
@@ -19,7 +26,12 @@ class Shape
       calculate_angle_from_points(cycle)
     end
   end
-  
+
+
+  def sign(x)
+    return (x < 0) ? -1 : 1
+  end
+
   def calculate_angle_from_points(points)
     raise "I can only give you an angle from 1 or 2 vectors (2-3 points)" if points.size > 3
     
@@ -30,7 +42,7 @@ class Shape
     slope1 = (y2 - y1)/(x2 - x1)
     slope2 = (y3 - y2)/(x3 - x2)
     
-    puts ">>>> #{slope1} #{slope2}"
+    #puts ">>>> #{slope1} #{slope2}"
 
     if slope1.infinite?
       angle = Math.atan(1/slope2).degrees
