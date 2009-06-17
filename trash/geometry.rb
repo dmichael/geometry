@@ -34,6 +34,38 @@ geometry.shapes.each do |shape|
   puts ''
 end
 
+#PolygonClassifier.overlap?(geometry.shapes[0], geometry.shapes[3])
+
+# Does the line from (4,2) to (2,0) cross the line from (0,4) to (4,0)? If so, where? 
+x1, y1 = 0.0, 0.0
+x2, y2 = 10.0, 0.0
+#square -> [0.0, 0.0] [10.0, 0.0]
+
+u1, v1 = 17.0, 3.0
+u2, v2 = 17.0, -3.0
+#rectangle -> [7.0, -3.0] [7.0, 3.0]
+
+  puts b1 = (y2-y1)/(x2-x1) #(A)
+
+  puts b2 = (v2-v1)/(u2-u1) #(B)
+
+a1 = y1-b1*x1 
+a2 = v1-b2*u1
+
+xi = -(a1-a2)/(b1-b2) #(C) 
+yi = a1+b1*xi 
+
+if (x1-xi)*(xi-x2) >= 0 && (u1-xi)*(xi-u2)>=0 && (y1-yi)*(yi-y2)>=0 && (v1-yi)*(yi-v2)>=0 
+  puts "lines cross at #{xi}, #{yi}"
+else 
+  puts "lines do not cross" 
+end
+
+segment1 = GeometryX::Segment.new_by_arrays([x1, y1], [x2, y2])
+segment2 = GeometryX::Segment.new_by_arrays([u1, v1], [u2, v2])
+
+puts segment1.intersects_with? segment2
+
 =begin
 polygon-polygon intersect
 
