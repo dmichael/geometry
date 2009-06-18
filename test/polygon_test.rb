@@ -14,14 +14,11 @@ class PolygonTest < Test::Unit::TestCase
     @rectangle = @polygons[3]
     @pentagon  = @polygons[4]    
   end
-
-  # def teardown
-  # end
-
+  
   def test_types_are_set
-    assert_equal true, @triangle.inside?(@square)
-    assert_equal false, @square.inside?(@triangle)
-    assert_equal false, @rectangle.inside?(@square)
+    # is this really necessary?
+    assert_equal 'triangle', @triangle.type
+    assert_equal 'square', @square.type
   end
   
   def test_odd_convexity
@@ -41,6 +38,15 @@ class PolygonTest < Test::Unit::TestCase
       Geometry::Point.new(4,5)
     ]
     assert_equal(false, Geometry::Polygon.new(points).convex?)
+    
+    points = [
+      Geometry::Point.new(1,1),
+      Geometry::Point.new(1,2),
+      Geometry::Point.new(2,2),
+      Geometry::Point.new(2,1)
+    ]
+    assert_equal(true, Geometry::Polygon.new(points).convex?)
+    assert_equal('ConvexCW', Geometry::Polygon.new(points).convexity)
   end
   
   def test_interior_points

@@ -1,4 +1,8 @@
+# Both the Segment class and the Vector class were taken directly from:
 # http://github.com/DanielVartanov/ruby-geometry/blob/311031cb4a260b3f5303bac8d1b312f6c108d3b8/lib/segment.rb
+
+# The major feature this class provides is the predicate method for testing line intersections
+# which is ultimately used to see if 2 polygons intersect (overlap)
 
 module Geometry  
   class Segment
