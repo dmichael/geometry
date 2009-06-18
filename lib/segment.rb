@@ -49,8 +49,8 @@ module Geometry
       # An intersection point exists, given the following conditions
       
       if ua >= 0.0 && ua <= 1.0 && ub >= 0.0 && ub <= 1.0
-        x = point1.x + ua*(p2.x - p1.x);
-        y = point1.y + ua*(p2.y - p1.y);
+        x = point1.x + ua*(p2.x - p1.x)
+        y = point1.y + ua*(p2.y - p1.y)
 
         return Point.new(x, y)
       end

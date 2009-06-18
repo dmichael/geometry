@@ -124,7 +124,7 @@ module Geometry
 
         this_direction = direction(p2, p3)
         if this_direction == -current_direction 
-      	    direction_changes += 1;
+      	    direction_changes += 1
     	  end
       	current_direction = this_direction
 
@@ -132,7 +132,7 @@ module Geometry
         if angle_sign == -this_sign
           return 'NotConvex'
         end
-        angle_sign = this_sign;
+        angle_sign = this_sign
       end
       # vertices.each_cycle
       
