@@ -25,4 +25,8 @@ class PolygonTest < Test::Unit::TestCase
     
     assert_equal true, @square.has_point_inside?(Geometry::Point.new(1,1))
   end
+  
+  def test_run_program
+    Geometry::View.new.print_statistics(@polygons)
+  end
 end

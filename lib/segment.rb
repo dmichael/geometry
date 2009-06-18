@@ -1,7 +1,4 @@
-module Geometry
-  class SegmentsDoNotIntersect < Exception; end
-  class SegmentsOverlap < Exception; end
-  
+module Geometry  
   class Segment < Struct.new(:point1, :point2)
     def self.new_by_arrays(point1_coordinates, point2_coordinates)
       self.new(Point.new(*point1_coordinates),
