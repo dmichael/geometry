@@ -19,15 +19,86 @@ module Geometry
       (polygon_classifier.convexity != 'NotConvex') ? true : false
     end
     
-    def intersects?(polygon)
-      @segments.each do |segment|
-        polygon.segments.each do |segment2|
-          return true if segment2.intersects_with?(segment)
+    # Loop through the segments of the current polygon (assuming convex)
+    # and test for intersection with each of the other polygon's segments
+    # Returns true on first found intersection. O(n^2) ? 
+    
+    def intersects_with?(polygon)
+      @segments.each do |current_segment|
+        polygon.segments.each do |segment|
+          return true if current_segment.intersects_with?(segment)
         end
       end
       false
     end
     
+    # If all points in the input polygon are inside the current polygon, return true
+    
+    def inside?(other_polygon)
+      counter = 0
+      points.each do |p|
+        counter += 1 if other_polygon.has_point_inside?(p)
+      end
+      return counter == points.size
+    end
+    
+    # If the number of times a ray intersects the line segments making up the polygon is even, 
+    # then the point is outside the polygon.
+    #
+    # http://local.wasp.uwa.edu.au/~pbourke/geometry/insidepoly/
+    
+    def has_point_inside?(p)
+      counter = 0
+      n  = points.size
+      p1 = points[0]
+      
+      @segments.each do |segment|
+        p1, p2 = segment.point1, segment.point2
+        
+        if p.y > min(p1.y, p2.y)
+          if p.y <= max(p1.y, p2.y)
+            if p.x <= max(p1.x, p2.x)
+              if p1.y != p2.y
+                xinters = (p.y-p1.y) * (p2.x-p1.x)/(p2.y-p1.y) + p1.x
+                if p1.x == p2.x || p.x <= xinters
+                  counter += 1
+                end
+              end
+            end
+          end
+        end
+        
+        p1 = p2
+      end
+      
+      return (counter % 2 == 0) ? false : true
+
+      # for i in 1..n do
+      #   p2 = points[i % n]
+      #   if (p.y > min(p1.y,p2.y))
+      #     if (p.y <= max(p1.y,p2.y))
+      #       if (p.x <= max(p1.x,p2.x))
+      #         if (p1.y != p2.y)
+      #           xinters = (p.y-p1.y) * (p2.x-p1.x)/(p2.y-p1.y) + p1.x
+      #           if (p1.x == p2.x || p.x <= xinters)
+      #             counter += 1
+      #           end
+      #         end
+      #       end
+      #     end
+      #   end
+      #   p1 = p2
+      # end
+    end
+    
+    def min(x,y) 
+      (x < y ? x : y)
+    end
+    
+    def max(x,y) 
+      (x > y ? x : y)
+    end
+
     def create_segments
       @points.each_cycle(1) do |points|
         @segments << Segment.new(*points)

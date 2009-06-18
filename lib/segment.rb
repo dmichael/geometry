@@ -24,15 +24,6 @@ module Geometry
       ((point1.y <=> point2.y) == -1) ? point1 : point2
     end
  
-    def contains_point?(point)
-      Geometry.distance(point1, point2) ===
-        Geometry.distance(point1, point) + Geometry.distance(point, point2)
-    end
- 
-    def parallel_to?(segment)
-      to_vector.collinear_with?(segment.to_vector)
-    end
- 
     def lies_on_one_line_with?(segment)
       Segment.new(point1, segment.point1).parallel_to?(self) &&
         Segment.new(point1, segment.point2).parallel_to?(self)
@@ -44,32 +35,6 @@ module Geometry
         segment.lies_on_line_intersecting?(self)
     end
     
-    def overlaps?(segment)
-      Segment.have_intersecting_bounds?(self, segment) &&
-        lies_on_one_line_with?(segment)
-    end
-    
-    def intersection_point_with(segment)
-      raise SegmentsDoNotIntersect unless intersects_with?(segment)
-      raise SegmentsOverlap if overlaps?(segment)
-      
-      numerator = (segment.point1.y - point1.y) * (segment.point1.x - segment.point2.x) -
-        (segment.point1.y - segment.point2.y) * (segment.point1.x - point1.x);
-      denominator = (point2.y - point1.y) * (segment.point1.x - segment.point2.x) -
-        (segment.point1.y - segment.point2.y) * (point2.x - point1.x);
- 
-      t = numerator.to_f / denominator;
-      
-      x = point1.x + t * (point2.x - point1.x)
-      y = point1.y + t * (point2.y - point1.y)
-      
-      Point.new(x, y)
-    end
- 
-    def length
-      GeometryX.distance(point1, point2)
-    end
- 
     def to_vector
       Vector.new(point2.x - point1.x, point2.y - point1.y)
     end
