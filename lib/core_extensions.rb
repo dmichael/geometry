@@ -8,12 +8,3 @@ class Array
     end
   end
 end
-
-# This one is not really needed, but came largely from the Ruby Cookbook
-
-class Numeric
-  def degrees
-    self * 180/(Math::PI)
-    # * Math::PI / 180
-  end
-end

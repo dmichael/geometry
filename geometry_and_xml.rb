@@ -1,16 +1,13 @@
-# adding these might not be necessary
+# Adding these might not be necessary, but lets be safe
 $LOAD_PATH.unshift File.join(File.dirname(File.expand_path(__FILE__)), 'lib')
 $LOAD_PATH.unshift File.join(File.dirname(File.expand_path(__FILE__)), 'test')
 
-require 'benchmark'
 require 'geometry'
 
 # Read an XML file and transform it into an array of polygons
 
-file = ARGV.first 
-
-# file could be nil
-xml = File.read(file || 'test/geometry.xml')
+file = ARGV.first
+xml  = File.read(file || 'test/geometry.xml')
 
 @polygons = Geometry.polygons_from_xml(xml)
 
@@ -18,4 +15,3 @@ xml = File.read(file || 'test/geometry.xml')
 # let's display them nicely.
   
 Geometry::View.new.print_statistics(@polygons)
-

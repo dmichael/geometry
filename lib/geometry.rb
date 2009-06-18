@@ -3,6 +3,7 @@ require 'point'
 require 'segment'
 require 'vector'
 require 'polygon'
+require 'view'
  
 module Geometry
 
@@ -33,42 +34,4 @@ module Geometry
   end
   
   module_function :polygons_from_xml
-  
-  #----------------
-  # print_statistics
-  #----------------
-  
-  class View
-    def print_statistics(polygons = [])
-      # Remove polygons that are not convex
-      spacer
-        
-      polygons.reject! do |polygon|
-        if !polygon.convex?
-          puts "'#{polygon.type}' is not a convex polygon"
-          true
-        end
-      end
-
-      # Print out the relationships of the polygons
-      spacer
-
-      polygons.each do |current_polygon|
-        puts "'#{current_polygon.type}':"
-        # 1) intersections
-        polygons.each do |polygon|  
-          next if polygon == current_polygon  
-          puts "  intersects #{polygon.type}" if current_polygon.intersects_with?(polygon)
-        end
-        # 2) surrounds
-        # 3) is seperate from
-        spacer
-      end
-    end
-    
-    def spacer
-      puts ''
-    end
-  end
-
 end

@@ -1,8 +1,15 @@
+# http://github.com/DanielVartanov/ruby-geometry/blob/311031cb4a260b3f5303bac8d1b312f6c108d3b8/lib/segment.rb
+
 module Geometry  
-  class Segment < Struct.new(:point1, :point2)
+  class Segment
+    attr_accessor :point1, :point2
+    
+    def initialize(point1, point2)
+      @point1, @point2 = point1, point2
+    end
+    
     def self.new_by_arrays(point1_coordinates, point2_coordinates)
-      self.new(Point.new(*point1_coordinates),
-               Point.new(*point2_coordinates))
+      self.new(Point.new(*point1_coordinates), Point.new(*point2_coordinates))
     end
  
     def leftmost_endpoint
