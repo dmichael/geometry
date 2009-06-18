@@ -10,3 +10,15 @@ The program can be run by calling the following.
 Run the tests with the following command.
 
     $ rake test
+    
+This is an example XML file
+
+    <?xml version="1.0""?> 
+      <geometry>  
+        <shape id="shape1"> 
+          <point x="0" y="0"/> 
+          <point x="10" y="0"/> 
+          <point x="10" y="10"/> 
+          <point x="0" y="10"/>  
+        </shape> 
+      </geometry>  
