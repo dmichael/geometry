@@ -56,7 +56,8 @@ module Geometry
     # then the point is outside the polygon. This algorithm has some limitations, but also works
     # for concave polygons and polygons with "holes". Does not seem to catch points on a segment.
     #
-    # Algorithm by Paul Bourke, ported from C: http://local.wasp.uwa.edu.au/~pbourke/geometry/insidepoly/
+    # Algorithm by Paul Bourke, ported to Ruby by David Michael
+    # http://local.wasp.uwa.edu.au/~pbourke/geometry/insidepoly/
     
     def has_interior_point?(p)
       counter = 0
@@ -106,13 +107,13 @@ module Geometry
       end
     end
     
-    #------------------------------
-    # Algorithm ported from:
+    # Algorithm ported from 
     # "Testing the Convexity of a Polygon" by Peter Schorn and Frederick Fisher
     # in "Graphics Gems IV", Academic Press, 1994
     #
     # This port has NOT been thoroughly tested, but catches all example cases
-
+    # This should be reexamined... decidedly inelegant
+    
     def convexity
       angle_sign        = 0
       direction_changes = 0

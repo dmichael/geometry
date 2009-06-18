@@ -73,6 +73,6 @@ class PolygonTest < Test::Unit::TestCase
   end
   
   def test_run_program
-    #Geometry::View.new.print_statistics(@polygons)
+    Geometry::View.new.render(:polygons => @polygons)
   end
 end

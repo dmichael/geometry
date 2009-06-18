@@ -15,7 +15,8 @@ xml  = File.read(file || 'test/geometry.xml')
 # let's display them nicely.
 
 if @polygons.size >= 2  
-  Geometry::View.new.print_statistics(@polygons)
+  Geometry::View.new.render(:polygons => @polygons)
+  #Geometry::View.new.print_statistics(@polygons)
 else
   puts "There are not enough polys in this file to tell you anything of import."
 end

@@ -1,12 +1,27 @@
 module Geometry
   class View
-    #----------------
-    # print_statistics
-    #----------------
+    attr_accessor :polygons, :formatter
+    
+    def initialize(formatter = ConsoleFormatter.new, options = {})
+      @formatter = formatter
+    end
+    
+    def render(locals = {})
+      @formatter.render(self, locals)
+    end
+  end
   
-    def print_statistics(polygons = [])
+  class Formatter
+    def render(context)
+      raise 'Abstract method called (implement me)'
+    end
+  end
+  
+  class ConsoleFormatter < Formatter
+    def render(context, locals)
+      polygons = locals[:polygons]
       # Remove polygons that are not convex, and notify
-      spacer
+      puts ''
       
       polygons.reject! do |polygon|
         if !polygon.convex?
@@ -16,7 +31,7 @@ module Geometry
       end
 
       # Print out the relationships of the polygons
-      spacer
+      puts ''
 
       polygons.each do |current_polygon|
         puts "'#{current_polygon.type}'"
@@ -40,12 +55,8 @@ module Geometry
         separates = current_polygon.find_separates(candidates)#(polygons - intersectors - surrounders - insiders).reject{|p| p == current_polygon}
         puts "  - is separate from #{separates.map{|p| p.type}.join(', ') }" if separates.size > 0
     
-        spacer  
+        puts ''  
       end
-    end
-
-    def spacer
-      puts ''
     end
   end
 end

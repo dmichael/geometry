@@ -1,15 +1,10 @@
 require 'rexml/document'
 require 'point'
 require 'segment'
-require 'vector'
 require 'polygon'
 require 'view'
  
 module Geometry
-
-  #----------------
-  # polygons_from_xml
-  #----------------
   
   # this really is a utility function, but without any others, 
   # lets make it a module function (accessible from Geometry.polygons_from_xml)
