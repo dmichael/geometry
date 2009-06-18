@@ -43,7 +43,8 @@ module Geometry
     end
     
     # If the number of times a ray intersects the line segments making up the polygon is even, 
-    # then the point is outside the polygon.
+    # then the point is outside the polygon. This algorithm has some limitations, but also works
+    # for concave polygons and polygons with "holes"
     #
     # http://local.wasp.uwa.edu.au/~pbourke/geometry/insidepoly/
     
@@ -54,10 +55,10 @@ module Geometry
       
       @segments.each do |segment|
         p1, p2 = segment.point1, segment.point2
-        
-        if p.y > min(p1.y, p2.y)
-          if p.y <= max(p1.y, p2.y)
-            if p.x <= max(p1.x, p2.x)
+
+        if p.y > [p1.y, p2.y].min
+          if p.y <= [p1.y, p2.y].max
+            if p.x <= [p1.x, p2.x].max
               if p1.y != p2.y
                 xinters = (p.y-p1.y) * (p2.x-p1.x)/(p2.y-p1.y) + p1.x
                 if p1.x == p2.x || p.x <= xinters
@@ -72,32 +73,8 @@ module Geometry
       end
       
       return (counter % 2 == 0) ? false : true
-
-      # for i in 1..n do
-      #   p2 = points[i % n]
-      #   if (p.y > min(p1.y,p2.y))
-      #     if (p.y <= max(p1.y,p2.y))
-      #       if (p.x <= max(p1.x,p2.x))
-      #         if (p1.y != p2.y)
-      #           xinters = (p.y-p1.y) * (p2.x-p1.x)/(p2.y-p1.y) + p1.x
-      #           if (p1.x == p2.x || p.x <= xinters)
-      #             counter += 1
-      #           end
-      #         end
-      #       end
-      #     end
-      #   end
-      #   p1 = p2
-      # end
     end
     
-    def min(x,y) 
-      (x < y ? x : y)
-    end
-    
-    def max(x,y) 
-      (x > y ? x : y)
-    end
 
     def create_segments
       @points.each_cycle(1) do |points|
