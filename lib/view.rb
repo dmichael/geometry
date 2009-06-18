@@ -1,13 +1,14 @@
 module Geometry
   class View
-    attr_accessor :polygons, :formatter
+    attr_accessor :locals, :formatter
     
     def initialize(formatter = ConsoleFormatter.new, options = {})
       @formatter = formatter
     end
     
     def render(locals = {})
-      @formatter.render(self, locals)
+      @locals = locals
+      @formatter.render(self)
     end
   end
   
@@ -18,8 +19,8 @@ module Geometry
   end
   
   class ConsoleFormatter < Formatter
-    def render(context, locals)
-      polygons = locals[:polygons]
+    def render(context)
+      polygons = context.locals[:polygons]
       # Remove polygons that are not convex, and notify
       puts ''
       
