@@ -21,11 +21,9 @@ class PolygonTest < Test::Unit::TestCase
     assert_equal 'square', @square.type
   end
   
-  def test_odd_convexity
+  def test_convexity
+    # I should go through all the shapes
     assert_equal(false, @odd.convex?)
-  end
-  
-  def test_square_convexity
     assert_equal(true, @square.convex?)
   end
   
